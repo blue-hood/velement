@@ -2,10 +2,16 @@
   "name": "velement",
   "version": "0.0.0",
   "description": "A minimal DOM renderer. ",
-  "main": "index.js",
-  "module": "index.js",
-  "types": "index.d.ts",
+  "keywords": [
+    "dom",
+    "virtual",
+    "renderer",
+    "minimal"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "babel src -d dist",
     "test": "lint-staged && tsc --noEmit"
   },
   "repository": {
@@ -19,6 +25,9 @@
   },
   "homepage": "https://github.com/blue-hood/velement#readme",
   "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
     "eslint": "^5.0.0",

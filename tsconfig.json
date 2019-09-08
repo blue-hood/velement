@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
     "pretty": true,
     "strict": true
   }

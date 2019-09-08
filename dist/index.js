@@ -1,81 +1,61 @@
 'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports.appendChildren = appendChildren;
-exports.createElement = createElement;
-exports.createVirtualElement = createVirtualElement;
-exports['default'] = void 0;
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError('Cannot call a class as a function');
-  }
-}
-
+var __spreadArrays =
+  (this && this.__spreadArrays) ||
+  function() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) r[k] = a[j];
+    return r;
+  };
+exports.__esModule = true;
 function appendChildren(element) {
-  for (var _len = arguments.length, children = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-    children[_key - 1] = arguments[_key];
+  var children = [];
+  for (var _i = 1; _i < arguments.length; _i++) {
+    children[_i - 1] = arguments[_i];
   }
-
   children.forEach(function(child) {
     element.appendChild(
       typeof child == 'string' ? document.createTextNode(child) : child instanceof HTMLElement ? child : child.element
     );
   });
 }
-
-function createElement(type) {
-  var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+exports.appendChildren = appendChildren;
+function createElement(type, attributes) {
+  var children = [];
+  for (var _i = 2; _i < arguments.length; _i++) {
+    children[_i - 2] = arguments[_i];
+  }
   var htmlElement = document.createElement(type);
-
-  for (var name in attributes) {
-    var value = attributes[name];
-
+  for (var name_1 in attributes) {
+    var value = attributes[name_1];
     if (typeof value == 'string') {
-      htmlElement.setAttribute(name, value);
+      htmlElement.setAttribute(name_1, value);
     } else {
-      htmlElement[name] = value;
+      htmlElement[name_1] = value;
     }
   }
-
-  for (
-    var _len2 = arguments.length, children = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2;
-    _key2 < _len2;
-    _key2++
-  ) {
-    children[_key2 - 2] = arguments[_key2];
-  }
-
-  appendChildren.apply(void 0, [htmlElement].concat(children));
+  appendChildren.apply(void 0, __spreadArrays([htmlElement], children));
   return htmlElement;
 }
-
-function createVirtualElement(type) {
-  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-  var virtualElement = new type(null, props);
-
-  for (
-    var _len3 = arguments.length, children = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2;
-    _key3 < _len3;
-    _key3++
-  ) {
-    children[_key3 - 2] = arguments[_key3];
+exports.createElement = createElement;
+function createVirtualElement(type, props) {
+  var children = [];
+  for (var _i = 2; _i < arguments.length; _i++) {
+    children[_i - 2] = arguments[_i];
   }
-
-  appendChildren.apply(void 0, [virtualElement.element].concat(children));
+  var virtualElement = new type(null, props);
+  appendChildren.apply(void 0, __spreadArrays([virtualElement.element], children));
   return virtualElement;
 }
-
-var VirtualElement = function VirtualElement(element) {
-  _classCallCheck(this, VirtualElement);
-
-  if (typeof element === 'string') {
-    this.element = document.createElement(element);
-  } else {
-    this.element = element;
+exports.createVirtualElement = createVirtualElement;
+var VirtualElement = /** @class */ (function() {
+  function VirtualElement(element) {
+    if (typeof element === 'string') {
+      this.element = document.createElement(element);
+    } else {
+      this.element = element;
+    }
   }
-};
-
+  return VirtualElement;
+})();
 exports['default'] = VirtualElement;

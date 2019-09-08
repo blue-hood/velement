@@ -1,7 +1,7 @@
 {
   "*.{js,ts}": [
     "prettier --write",
-    "eslint --fix",
+    "eslint --fix --quiet",
     "git add"
   ],
   "*.md": [

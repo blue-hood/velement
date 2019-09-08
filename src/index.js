@@ -1,6 +1,8 @@
 export function appendChildren(element, ...children) {
     children.forEach(child => {
-        element.appendChild(child instanceof HTMLElement ? child : child.element);
+        element.appendChild(
+            typeof child == 'string' ? document.createTextNode(child) : child instanceof HTMLElement ? child : child.element
+        );
     });
 }
 

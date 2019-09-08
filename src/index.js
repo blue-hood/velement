@@ -4,7 +4,7 @@ export function appendChildren(element, ...children) {
     });
 }
 
-export function createElement(type, attributes, ...children) {
+export function createElement(type, attributes = undefined, ...children) {
     const htmlElement = document.createElement(type);
 
     for (const name in attributes) {
@@ -21,7 +21,7 @@ export function createElement(type, attributes, ...children) {
     return htmlElement;
 }
 
-export function createVirtualElement(type, props, ...children) {
+export function createVirtualElement(type, props = undefined, ...children) {
     const virtualElement = new type(null, props);
 
     appendChildren(virtualElement.element, ...children);

@@ -2,13 +2,13 @@ export function appendChildren(element: HTMLElement, ...children: (HTMLElement |
 
 export function createElement<HElement extends HTMLElement>(
     type: keyof HTMLElementTagNameMap,
-    attributes: { [name: string]: any } | null,
+    attributes?: { [name: string]: any } | null,
     ...children: (HTMLElement | VirtualElement)[]
 ): HElement;
 
 export function createVirtualElement<VElement extends VirtualElement, Props = null>(
     type: { new (element: null, props: Props): VElement },
-    props: Props,
+    props?: Props,
     ...children: (HTMLElement | VirtualElement)[]
 ): VElement;
 

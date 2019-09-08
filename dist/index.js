@@ -24,7 +24,8 @@ function appendChildren(element) {
   });
 }
 
-function createElement(type, attributes) {
+function createElement(type) {
+  var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
   var htmlElement = document.createElement(type);
 
   for (var name in attributes) {
@@ -49,7 +50,8 @@ function createElement(type, attributes) {
   return htmlElement;
 }
 
-function createVirtualElement(type, props) {
+function createVirtualElement(type) {
+  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
   var virtualElement = new type(null, props);
 
   for (

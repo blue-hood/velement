@@ -1,19 +1,17 @@
 declare type Child = HTMLElement | VirtualElement | string;
+interface Attributes {
+  [name: string]: any;
+}
 export declare function appendChildren(element: HTMLElement, ...children: Child[]): void;
-export declare function createElement<HElement extends HTMLElement>(
-  type: keyof HTMLElementTagNameMap,
-  attributes: {
-    [name: string]: any;
-  } | null,
+export declare function createElement<Props, Element extends HTMLElement | VirtualElement>(
+  type:
+    | keyof HTMLElementTagNameMap
+    | {
+        new (element: null, props: Props): VirtualElement;
+      },
+  props: Attributes | Props,
   ...children: Child[]
-): HElement;
-export declare function createVirtualElement<Props, VElement extends VirtualElement>(
-  type: {
-    new (element: null, props: Props): VElement;
-  },
-  props: Props,
-  ...children: Child[]
-): VElement;
+): Element;
 export default class VirtualElement<HElement extends HTMLElement = HTMLElement> {
   element: HElement;
   constructor(element: HElement | keyof HTMLElementTagNameMap);

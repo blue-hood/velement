@@ -1,4 +1,7 @@
 type Child = HTMLElement | VirtualElement | string;
+interface Attributes {
+    [name: string]: any;
+}
 
 export function appendChildren(element: HTMLElement, ...children: Child[]): void {
     children.forEach(child => {
@@ -8,42 +11,39 @@ export function appendChildren(element: HTMLElement, ...children: Child[]): void
     });
 }
 
-export function createElement<HElement extends HTMLElement>(
-    type: keyof HTMLElementTagNameMap,
-    attributes: { [name: string]: any } | null,
+export function createElement<Props, Element extends HTMLElement | VirtualElement>(
+    type: keyof HTMLElementTagNameMap | { new (element: null, props: Props): VirtualElement },
+    props: Attributes | Props,
     ...children: Child[]
-): HElement {
-    const htmlElement = document.createElement(type) as HElement;
+): Element {
+    let element;
 
-    for (const name in attributes) {
-        const value = attributes[name];
+    if (typeof type == 'string') {
+        element = document.createElement(type);
 
-        if (typeof value == 'string') {
-            htmlElement.setAttribute(name, value);
-        } else {
-            (htmlElement as any)[name] = value;
+        for (const name in props as Attributes) {
+            const value = (props as Attributes)[name];
+
+            if (typeof value == 'string') {
+                element.setAttribute(name, value);
+            } else {
+                (element as any)[name] = value;
+            }
         }
+
+        appendChildren(element, ...children);
+    } else {
+        element = new type(null, props as Props);
+        appendChildren(element.element, ...children);
     }
 
-    appendChildren(htmlElement, ...children);
-    return htmlElement;
-}
-
-export function createVirtualElement<Props, VElement extends VirtualElement>(
-    type: { new (element: null, props: Props): VElement },
-    props: Props,
-    ...children: Child[]
-): VElement {
-    const virtualElement = new type(null, props);
-
-    appendChildren(virtualElement.element, ...children);
-    return virtualElement;
+    return element as Element;
 }
 
 export default class VirtualElement<HElement extends HTMLElement = HTMLElement> {
     public element: HElement;
     public constructor(element: HElement | keyof HTMLElementTagNameMap) {
-        if (typeof element === 'string') {
+        if (typeof element == 'string') {
             this.element = document.createElement(element) as HElement;
         } else {
             this.element = element;

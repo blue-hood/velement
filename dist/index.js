@@ -20,37 +20,33 @@ function appendChildren(element) {
   });
 }
 exports.appendChildren = appendChildren;
-function createElement(type, attributes) {
+function createElement(type, props) {
   var children = [];
   for (var _i = 2; _i < arguments.length; _i++) {
     children[_i - 2] = arguments[_i];
   }
-  var htmlElement = document.createElement(type);
-  for (var name_1 in attributes) {
-    var value = attributes[name_1];
-    if (typeof value == 'string') {
-      htmlElement.setAttribute(name_1, value);
-    } else {
-      htmlElement[name_1] = value;
+  var element;
+  if (typeof type == 'string') {
+    element = document.createElement(type);
+    for (var name_1 in props) {
+      var value = props[name_1];
+      if (typeof value == 'string') {
+        element.setAttribute(name_1, value);
+      } else {
+        element[name_1] = value;
+      }
     }
+    appendChildren.apply(void 0, __spreadArrays([element], children));
+  } else {
+    element = new type(null, props);
+    appendChildren.apply(void 0, __spreadArrays([element.element], children));
   }
-  appendChildren.apply(void 0, __spreadArrays([htmlElement], children));
-  return htmlElement;
+  return element;
 }
 exports.createElement = createElement;
-function createVirtualElement(type, props) {
-  var children = [];
-  for (var _i = 2; _i < arguments.length; _i++) {
-    children[_i - 2] = arguments[_i];
-  }
-  var virtualElement = new type(null, props);
-  appendChildren.apply(void 0, __spreadArrays([virtualElement.element], children));
-  return virtualElement;
-}
-exports.createVirtualElement = createVirtualElement;
 var VirtualElement = /** @class */ (function() {
   function VirtualElement(element) {
-    if (typeof element === 'string') {
+    if (typeof element == 'string') {
       this.element = document.createElement(element);
     } else {
       this.element = element;

@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render HTMLElement 1`] = `
+exports[`should create HTMLElement 1`] = `
 <div>
   HTMLDivElement
+</div>
+`;
+
+exports[`should create VirtualElement 1`] = `
+<div>
+  VirtualDivElement
 </div>
 `;

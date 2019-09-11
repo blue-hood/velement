@@ -7,7 +7,7 @@ export declare function createElement<HElement extends HTMLElement>(
   } | null,
   ...children: Child[]
 ): HElement;
-export declare function createVirtualElement<VElement extends VirtualElement, Props = null>(
+export declare function createVirtualElement<Props, VElement extends VirtualElement>(
   type: {
     new (element: null, props: Props): VElement;
   },

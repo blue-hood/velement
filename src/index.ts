@@ -29,7 +29,7 @@ export function createElement<HElement extends HTMLElement>(
     return htmlElement;
 }
 
-export function createVirtualElement<VElement extends VirtualElement, Props = null>(
+export function createVirtualElement<Props, VElement extends VirtualElement>(
     type: { new (element: null, props: Props): VElement },
     props: Props,
     ...children: Child[]

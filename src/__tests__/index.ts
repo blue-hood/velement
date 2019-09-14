@@ -3,54 +3,54 @@ import '@testing-library/jest-dom/extend-expect';
 import VirtualElement, { appendChildren, createElement } from '..';
 
 interface DivProps {
-    style?: string;
+  style?: string;
 }
 
 class Div extends VirtualElement<HTMLDivElement> {
-    public constructor(element: HTMLDivElement | null, props: DivProps) {
-        super(element || 'div');
+  public constructor(element: HTMLDivElement | null, props: DivProps) {
+    super(element || 'div');
 
-        if (props.style) {
-            this.element.setAttribute('style', props.style);
-        }
-
-        this.element.innerHTML = 'VirtualDivElement';
+    if (props.style) {
+      this.element.setAttribute('style', props.style);
     }
+
+    this.element.innerHTML = 'VirtualDivElement';
+  }
 }
 
 test('should append children', async () => {
-    const div = document.createElement('div');
+  const div = document.createElement('div');
 
-    const htmlElement = createElement<null, HTMLDivElement>('div', null);
-    htmlElement.innerHTML = `HTMLDivElement`;
+  const htmlElement = createElement<HTMLDivElement>('div', null);
+  htmlElement.innerHTML = `HTMLDivElement`;
 
-    const virtualElement = createElement<DivProps, Div>(Div, {});
+  const virtualElement = createElement<Div, DivProps>(Div, {});
 
-    appendChildren(div, 'TextNode', htmlElement, virtualElement);
+  appendChildren(div, 'TextNode', htmlElement, virtualElement);
 
-    expect(div).toMatchSnapshot();
+  expect(div).toMatchSnapshot();
 });
 
 test('should create HTMLElement', async () => {
-    const div = createElement<null, HTMLDivElement>('div', {
-        style: 'font-weight: bold;'
-    });
-    div.innerHTML = `HTMLDivElement`;
+  const div = createElement<HTMLDivElement>('div', {
+    style: 'font-weight: bold;'
+  });
+  div.innerHTML = `HTMLDivElement`;
 
-    expect(div).toMatchSnapshot();
+  expect(div).toMatchSnapshot();
 });
 
 test('should create VirtualElement', async () => {
-    const div = createElement<DivProps, Div>(Div, {
-        style: 'font-weight: bold;'
-    });
+  const div = createElement<Div, DivProps>(Div, {
+    style: 'font-weight: bold;'
+  });
 
-    expect(div.element).toMatchSnapshot();
+  expect(div.element).toMatchSnapshot();
 });
 
 test('should compose HTMLElement', async () => {
-    const htmlElement = document.createElement('div');
-    const virtualElement = new Div(htmlElement, {});
+  const htmlElement = document.createElement('div');
+  const virtualElement = new Div(htmlElement, {});
 
-    expect(virtualElement.element).toMatchSnapshot();
+  expect(virtualElement.element).toMatchSnapshot();
 });

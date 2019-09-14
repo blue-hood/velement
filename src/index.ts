@@ -11,9 +11,21 @@ export function appendChildren(element: HTMLElement, ...children: Child[]): void
   });
 }
 
-export function createElement<Props, Element extends HTMLElement | VirtualElement>(
+export function createElement<HElement extends HTMLElement>(
+  type: keyof HTMLElementTagNameMap,
+  props: Attributes | null,
+  ...children: Child[]
+): HElement;
+
+export function createElement<VElement extends VirtualElement, Props>(
+  type: { new (element: null, props: Props): VElement },
+  props: Props,
+  ...children: Child[]
+): VElement;
+
+export function createElement<Element extends HTMLElement | VirtualElement, Props>(
   type: keyof HTMLElementTagNameMap | { new (element: null, props: Props): VirtualElement },
-  props: Attributes | Props,
+  props: Attributes | null | Props,
   ...children: Child[]
 ): Element {
   let element;
@@ -21,7 +33,7 @@ export function createElement<Props, Element extends HTMLElement | VirtualElemen
   if (typeof type == 'string') {
     element = document.createElement(type);
 
-    for (const name in props as Attributes) {
+    for (const name in props as Attributes | null) {
       const value = (props as Attributes)[name];
 
       if (typeof value == 'string') {

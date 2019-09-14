@@ -1,50 +1,31 @@
-"use strict";
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-exports.__esModule = true;
-function appendChildren(element) {
-    var children = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        children[_i - 1] = arguments[_i];
-    }
-    children.forEach(function (child) {
+export function appendChildren(element, ...children) {
+    children.forEach(child => {
         element.appendChild(typeof child == 'string' ? document.createTextNode(child) : child instanceof HTMLElement ? child : child.element);
     });
 }
-exports.appendChildren = appendChildren;
-function createElement(type, props) {
-    var children = [];
-    for (var _i = 2; _i < arguments.length; _i++) {
-        children[_i - 2] = arguments[_i];
-    }
-    var element;
+export function createElement(type, props, ...children) {
+    let element;
     if (typeof type == 'string') {
         element = document.createElement(type);
-        for (var name_1 in props) {
-            var value = props[name_1];
+        for (const name in props) {
+            const value = props[name];
             if (typeof value == 'string') {
-                element.setAttribute(name_1, value);
+                element.setAttribute(name, value);
             }
             else {
-                element[name_1] = value;
+                element[name] = value;
             }
         }
-        appendChildren.apply(void 0, __spreadArrays([element], children));
+        appendChildren(element, ...children);
     }
     else {
         element = new type(null, props);
-        appendChildren.apply(void 0, __spreadArrays([element.element], children));
+        appendChildren(element.element, ...children);
     }
     return element;
 }
-exports.createElement = createElement;
-var VirtualElement = /** @class */ (function () {
-    function VirtualElement(element) {
+export default class VirtualElement {
+    constructor(element) {
         if (typeof element == 'string') {
             this.element = document.createElement(element);
         }
@@ -52,6 +33,4 @@ var VirtualElement = /** @class */ (function () {
             this.element = element;
         }
     }
-    return VirtualElement;
-}());
-exports["default"] = VirtualElement;
+}

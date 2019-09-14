@@ -4,4 +4,6 @@
 
 # velement
 
-(Under developing)
+A minimal DOM renderer.
+
+# インストール

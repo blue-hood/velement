@@ -1,13 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should create HTMLElement 1`] = `
+exports[`should append children 1`] = `
 <div>
+  TextNode
+  <div>
+    HTMLDivElement
+  </div>
+  <div>
+    VirtualDivElement
+  </div>
+</div>
+`;
+
+exports[`should compose HTMLElement 1`] = `
+<div>
+  VirtualDivElement
+</div>
+`;
+
+exports[`should create HTMLElement 1`] = `
+<div
+  style="font-weight: bold;"
+>
   HTMLDivElement
 </div>
 `;
 
 exports[`should create VirtualElement 1`] = `
-<div>
+<div
+  style="font-weight: bold;"
+>
   VirtualDivElement
 </div>
 `;

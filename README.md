@@ -6,4 +6,16 @@
 
 A minimal DOM renderer.
 
-# インストール
+## Usage
+
+## Install
+
+Just run `npm install velement` or `yarn add velement`.
+
+## VirtualElement class
+
+## Utility methods
+
+## 結論
+
+velement を使うと、React の素晴らしさを体感することができるでしょう。

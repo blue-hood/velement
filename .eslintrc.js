@@ -5,7 +5,7 @@ module.exports = {
     commonjs: true,
     'jest/globals': true
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
@@ -15,5 +15,7 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: ['jest'],
-  rules: {}
+  rules: {
+    '@typescript-eslint/indent': false
+  }
 };

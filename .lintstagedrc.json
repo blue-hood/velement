@@ -3,7 +3,7 @@
     "eslint --fix --quiet",
     "git add"
   ],
-  "*.md": [
+  "*.{md,yml}": [
     "prettier --write",
     "git add"
   ]

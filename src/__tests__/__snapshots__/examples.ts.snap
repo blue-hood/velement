@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Usage with JavaScript 1`] = `
+<div>
+  TextNode
+  <div>
+    HTMLDivElement
+  </div>
+  <div>
+    VirtualDivElement
+  </div>
+</div>
+`;
+
+exports[`Usage with TypeScript 1`] = `
+<div>
+  TextNode
+  <div>
+    HTMLDivElement
+  </div>
+  <div>
+    VirtualDivElement
+  </div>
+</div>
+`;

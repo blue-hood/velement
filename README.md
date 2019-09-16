@@ -8,6 +8,62 @@ A minimal DOM renderer.
 
 ## Usage
 
+With JavaScript:
+
+```JavaScript
+import VirtualElement, {appendChildren, createElement} from 'velement';
+
+class Div extends VirtualElement {
+  constructor(element) {
+    super(element || 'div');
+    this.element.innerHTML = 'VirtualDivElement';
+  }
+}
+
+const container = document.createElement('div');
+
+const htmlElement = createElement('div', null);
+htmlElement.innerHTML = `HTMLDivElement`;
+const virtualElement = createElement(Div, {});
+
+appendChildren(container, 'TextNode', htmlElement, virtualElement);
+```
+
+Then with TypeScript:
+
+```TypeScript
+import VirtualElement, {appendChildren, createElement} from 'velement';
+
+class Div extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null) {
+    super(element || 'div');
+    this.element.innerHTML = 'VirtualDivElement';
+  }
+}
+
+const container = document.createElement('div');
+
+const htmlElement = createElement<HTMLDivElement>('div', null);
+htmlElement.innerHTML = `HTMLDivElement`;
+const virtualElement = createElement<Div, {}>(Div, {});
+
+appendChildren(container, 'TextNode', htmlElement, virtualElement);
+```
+
+Container element will be rendered like:
+
+```
+<div>
+  TextNode
+  <div>
+    HTMLDivElement
+  </div>
+  <div>
+    VirtualDivElement
+  </div>
+</div>
+```
+
 ## Install
 
 Just run `npm install velement` or `yarn add velement`.

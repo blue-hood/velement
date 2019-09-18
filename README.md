@@ -70,8 +70,59 @@ Just run `npm install velement` or `yarn add velement`.
 
 ## VirtualElement class
 
+VirtualElements are wrapper elements of HTML elements.
+Typically, a minimum VirtualElement with HTMLDivElement is defined as:
+
+```TypeScript
+import VirtualElement from 'velement';
+
+class Div extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null) {
+    super(element || 'div');
+  }
+}
+
+new Div(null);
+```
+
+Then, the constructor can have properties.
+The inner HTML element can be accessed through `this.element`.
+
+```TypeScript
+import VirtualElement from 'velement';
+
+interface DivProps {
+  text: string;
+}
+
+class Div extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null, props: DivProps) {
+    super(element || 'div');
+
+    this.element.innerHTML = props.text;
+  }
+}
+
+new Div(null, {
+  text: 'VirtualDivElement. '
+});
+```
+
+VirtualElement also can be rendered to existing element.
+
+```TypeScript
+const div = document.createElement('div');
+new Div(div, {
+    text: 'VirtualDivElement. '
+});
+```
+
 ## Utility methods
 
-## 結論
+### appendChildren
 
-velement を使うと、React の素晴らしさを体感することができるでしょう。
+### createElement
+
+## 総括
+
+velement を使うと、React がいかに洗練されているかを体感することができるでしょう。

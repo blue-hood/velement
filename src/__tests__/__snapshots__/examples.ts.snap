@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Minimum VirtualElement 1`] = `
+Div {
+  "element": <div />,
+}
+`;
+
+exports[`Render to existing element 1`] = `
+PropsDiv {
+  "element": <div>
+    VirtualDivElement. 
+  </div>,
+}
+`;
+
 exports[`Usage with JavaScript 1`] = `
 <div>
   TextNode
@@ -22,4 +36,12 @@ exports[`Usage with TypeScript 1`] = `
     VirtualDivElement
   </div>
 </div>
+`;
+
+exports[`VirtualElement with properties 1`] = `
+PropsDiv {
+  "element": <div>
+    VirtualDivElement. 
+  </div>,
+}
 `;

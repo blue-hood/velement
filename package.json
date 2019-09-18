@@ -1,5 +1,5 @@
 {
-  "name": "velement",
+  "name": "@blue-hood/velement",
   "version": "0.0.0",
   "description": "A minimal DOM renderer. ",
   "keywords": [

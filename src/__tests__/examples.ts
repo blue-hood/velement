@@ -77,3 +77,54 @@ test('Render to existing element', async () => {
     })
   ).toMatchSnapshot();
 });
+
+test('Example of appendChildren', async () => {
+  class Div extends VirtualElement<HTMLDivElement> {
+    public constructor(element: HTMLDivElement | null) {
+      super(element || 'div');
+    }
+  }
+
+  const container = document.createElement('div');
+  appendChildren(container, createElement<Div, {}>(Div, {}), createElement<HTMLDivElement>('div', null), 'TextNode. ');
+
+  expect(container).toMatchSnapshot();
+});
+
+test('Example of createElement of HTML element', async () => {
+  expect(
+    createElement<HTMLDivElement>(
+      'div',
+      {
+        style: `
+        color: red;
+      `
+      },
+      'HTMLDivElement. '
+    )
+  ).toMatchSnapshot();
+});
+
+test('Example of createElement of VirtualElement', async () => {
+  interface DivProps {
+    color: string;
+  }
+
+  class Div extends VirtualElement<HTMLDivElement> {
+    public constructor(element: HTMLDivElement | null, props: DivProps) {
+      super(element || 'div');
+
+      this.element.style.color = props.color;
+    }
+  }
+
+  expect(
+    createElement<Div, DivProps>(
+      Div,
+      {
+        color: 'red'
+      },
+      'VirtualDivElement. '
+    )
+  ).toMatchSnapshot();
+});

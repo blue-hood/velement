@@ -119,9 +119,82 @@ new Div(div, {
 
 ## Utility methods
 
+### createElement
+
+```TypeScript
+interface Attributes {
+  [name: string]: any;
+}
+type Child = HTMLElement | VirtualElement | string;
+
+export function createElement<HElement extends HTMLElement>
+  (type: keyof HTMLElementTagNameMap, props: Attributes | null, ...children: Child[]): HElement;
+
+export function createElement<VElement extends VirtualElement, Props>
+  (type: { new (element: null, props: Props): VElement }, props: Props, ...children: Child[]): VElement;
+```
+
+Create HTML element or VirtualElement with properties.
+And render children to the inner element, this is equal to `appendChildren` function.
+
+ex. HTMLDivElement
+
+```TypeScript
+import {createElement} from 'velement';
+
+createElement<HTMLDivElement>('div', {
+  style: `
+    color: red;
+  `
+}, 'HTMLDivElement. ');
+```
+
+ex. VirtualElement
+
+```TypeScript
+import VirtualElement, {createElement} from 'velement';
+
+interface DivProps {
+  color: string
+}
+
+class Div extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null, props: DivProps) {
+    super(element || 'div');
+
+    this.element.style.color = props.color;
+  }
+}
+
+createElement<Div, DivProps>(Div, {
+  color: 'red'
+}, 'VirtualDivElement. ');
+```
+
 ### appendChildren
 
-### createElement
+```TypeScript
+type Child = HTMLElement | VirtualElement | string;
+
+function appendChildren(element: HTMLElement, ...children: Child[]): void;
+```
+
+Append children - HTML element, VirtualElement, text - to HTML element.
+
+ex.
+
+```TypeScript
+import VirtualElement, {appendChildren, createElement} from 'velement';
+
+class Div extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null) {
+    super(element || 'div');
+  }
+}
+
+const container = document.createElement('div');
+appendChildren(container, createElement<Div, {}>(Div, {}), createElement<HTMLDivElement>('div', null), 'TextNode. ');
+```
 
 ## 総括
 

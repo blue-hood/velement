@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Example of appendChildren 1`] = `
+<div>
+  <div />
+  <div />
+  TextNode. 
+</div>
+`;
+
+exports[`Example of createElement of HTML element 1`] = `
+<div
+  style="
+        color: red;
+      "
+>
+  HTMLDivElement. 
+</div>
+`;
+
+exports[`Example of createElement of VirtualElement 1`] = `
+Div {
+  "element": <div
+    style="color: red;"
+  >
+    VirtualDivElement. 
+  </div>,
+}
+`;
+
 exports[`Minimum VirtualElement 1`] = `
 Div {
   "element": <div />,

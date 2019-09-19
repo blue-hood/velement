@@ -1,7 +1,7 @@
 {
   "name": "@blue-hood/velement",
-  "version": "0.0.0",
-  "description": "A minimal DOM renderer. ",
+  "version": "0.0.1",
+  "description": "A minimal DOM renderer for legacy browsers. ",
   "keywords": [
     "dom",
     "virtual",

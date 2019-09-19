@@ -4,7 +4,7 @@
 
 # velement
 
-A minimal DOM renderer.
+A minimal DOM renderer for legacy browsers.
 
 ## Usage
 

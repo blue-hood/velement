@@ -21,7 +21,7 @@ class Div extends VirtualElement<HTMLDivElement> {
 test('should append children', async () => {
   const div = document.createElement('div');
 
-  const htmlElement = createElement<HTMLDivElement>('div', null);
+  const htmlElement = createElement('div', null);
   htmlElement.innerHTML = `HTMLDivElement`;
 
   const virtualElement = createElement<Div, DivProps>(Div, {});
@@ -32,7 +32,7 @@ test('should append children', async () => {
 });
 
 test('should create HTMLElement', async () => {
-  const div = createElement<HTMLDivElement>('div', {
+  const div = createElement('div', {
     style: 'font-weight: bold;'
   });
   div.innerHTML = `HTMLDivElement`;

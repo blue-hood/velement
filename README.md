@@ -4,7 +4,7 @@
 
 # velement
 
-A minimal DOM renderer for legacy browsers.
+A minimal DOM renderer for legacy browsers
 
 ## Usage
 
@@ -43,7 +43,7 @@ class Div extends VirtualElement<HTMLDivElement> {
 
 const container = document.createElement('div');
 
-const htmlElement = createElement<HTMLDivElement>('div', null);
+const htmlElement = createElement('div', null);
 htmlElement.innerHTML = `HTMLDivElement`;
 const virtualElement = createElement<Div, {}>(Div, {});
 
@@ -148,7 +148,7 @@ ex. HTMLDivElement
 ```ts
 import { createElement } from 'velement';
 
-createElement<HTMLDivElement>(
+createElement(
   'div',
   {
     style: `
@@ -207,7 +207,7 @@ class Div extends VirtualElement<HTMLDivElement> {
 }
 
 const container = document.createElement('div');
-appendChildren(container, createElement<Div, {}>(Div, {}), createElement<HTMLDivElement>('div', null), 'TextNode. ');
+appendChildren(container, createElement<Div, {}>(Div, {}), createElement('div', null), 'TextNode. ');
 ```
 
 ## 総括

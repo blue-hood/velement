@@ -11,8 +11,14 @@ export function appendChildren(element: HTMLElement, ...children: Child[]): void
   });
 }
 
+export function createElement<TagName extends keyof HTMLElementTagNameMap>(
+  type: TagName,
+  props: Attributes | null,
+  ...children: Child[]
+): HTMLElementTagNameMap[TagName];
+
 export function createElement<HElement extends HTMLElement>(
-  type: keyof HTMLElementTagNameMap,
+  type: string,
   props: Attributes | null,
   ...children: Child[]
 ): HElement;
@@ -24,7 +30,7 @@ export function createElement<VElement extends VirtualElement, Props>(
 ): VElement;
 
 export function createElement<Element extends HTMLElement | VirtualElement, Props>(
-  type: keyof HTMLElementTagNameMap | { new (element: null, props: Props): VirtualElement },
+  type: string | { new (element: null, props: Props): VirtualElement },
   props: Attributes | null | Props,
   ...children: Child[]
 ): Element {

@@ -42,7 +42,7 @@ test('Usage with TypeScript', async () => {
 
   const container = document.createElement('div');
 
-  const htmlElement = createElement<HTMLDivElement>('div', null);
+  const htmlElement = createElement('div', null);
   htmlElement.innerHTML = `HTMLDivElement`;
   const virtualElement = createElement<Div, {}>(Div, {});
 
@@ -86,14 +86,14 @@ test('Example of appendChildren', async () => {
   }
 
   const container = document.createElement('div');
-  appendChildren(container, createElement<Div, {}>(Div, {}), createElement<HTMLDivElement>('div', null), 'TextNode. ');
+  appendChildren(container, createElement<Div, {}>(Div, {}), createElement('div', null), 'TextNode. ');
 
   expect(container).toMatchSnapshot();
 });
 
 test('Example of createElement of HTML element', async () => {
   expect(
-    createElement<HTMLDivElement>(
+    createElement(
       'div',
       {
         style: `

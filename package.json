@@ -1,6 +1,6 @@
 {
   "name": "@blue-hood/velement",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A minimal DOM renderer for legacy browsers. ",
   "keywords": [
     "dom",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/blue-hood/velement#readme",
   "devDependencies": {
-    "@testing-library/dom": "^6.2.0",
+    "@testing-library/dom": "^6.3.0",
     "@testing-library/jest-dom": "^4.1.0",
     "@types/jest": "^24.0.18",
     "@typescript-eslint/eslint-plugin": "^1.12.0",

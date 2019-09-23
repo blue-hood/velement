@@ -1,14 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Example of appendChildren 1`] = `
+exports[`VirtualElement with properties 1`] = `
+TextDiv {
+  "element": <div>
+    VirtualDivElement. 
+  </div>,
+}
+`;
+
+exports[`example of appendChildren 1`] = `
 <div>
-  <div />
-  <div />
+  <div>
+    VirtualDivElement
+  </div>
+  <div>
+    HTMLDivElement
+  </div>
   TextNode. 
 </div>
 `;
 
-exports[`Example of createElement of HTML element 1`] = `
+exports[`example of createElement of HTML element 1`] = `
 <div
   style="
         color: red;
@@ -18,8 +30,8 @@ exports[`Example of createElement of HTML element 1`] = `
 </div>
 `;
 
-exports[`Example of createElement of VirtualElement 1`] = `
-Div {
+exports[`example of createElement of VirtualElement 1`] = `
+ColorDiv {
   "element": <div
     style="color: red;"
   >
@@ -28,21 +40,23 @@ Div {
 }
 `;
 
-exports[`Minimum VirtualElement 1`] = `
-Div {
-  "element": <div />,
+exports[`minimum VirtualElement 1`] = `
+TSDiv {
+  "element": <div>
+    VirtualDivElement
+  </div>,
 }
 `;
 
-exports[`Render to existing element 1`] = `
-PropsDiv {
+exports[`render to existing element 1`] = `
+TextDiv {
   "element": <div>
     VirtualDivElement. 
   </div>,
 }
 `;
 
-exports[`Usage with JavaScript 1`] = `
+exports[`usage with JavaScript 1`] = `
 <div>
   TextNode
   <div>
@@ -54,7 +68,7 @@ exports[`Usage with JavaScript 1`] = `
 </div>
 `;
 
-exports[`Usage with TypeScript 1`] = `
+exports[`usage with TypeScript 1`] = `
 <div>
   TextNode
   <div>
@@ -64,12 +78,4 @@ exports[`Usage with TypeScript 1`] = `
     VirtualDivElement
   </div>
 </div>
-`;
-
-exports[`VirtualElement with properties 1`] = `
-PropsDiv {
-  "element": <div>
-    VirtualDivElement. 
-  </div>,
-}
 `;

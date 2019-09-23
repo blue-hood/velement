@@ -13,7 +13,7 @@ With JavaScript:
 ```js
 import VirtualElement, { appendChildren, createElement } from 'velement';
 
-class Div extends VirtualElement {
+class JSDiv extends VirtualElement {
   constructor(element) {
     super(element || 'div');
     this.element.innerHTML = 'VirtualDivElement';
@@ -24,7 +24,7 @@ const container = document.createElement('div');
 
 const htmlElement = createElement('div', null);
 htmlElement.innerHTML = `HTMLDivElement`;
-const virtualElement = createElement(Div, {});
+const virtualElement = createElement(JSDiv, {});
 
 appendChildren(container, 'TextNode', htmlElement, virtualElement);
 ```
@@ -34,18 +34,22 @@ Then with TypeScript:
 ```ts
 import VirtualElement, { appendChildren, createElement } from 'velement';
 
-class Div extends VirtualElement<HTMLDivElement> {
+class TSDiv extends VirtualElement<HTMLDivElement> {
   public constructor(element: HTMLDivElement | null) {
     super(element || 'div');
     this.element.innerHTML = 'VirtualDivElement';
   }
 }
 
+declare module 'velement' {
+  function createElement(type: typeof TSDiv, props: {}, ...children: Child[]): TSDiv;
+}
+
 const container = document.createElement('div');
 
 const htmlElement = createElement('div', null);
 htmlElement.innerHTML = `HTMLDivElement`;
-const virtualElement = createElement<Div, {}>(Div, {});
+const virtualElement = createElement(TSDiv, {});
 
 appendChildren(container, 'TextNode', htmlElement, virtualElement);
 ```
@@ -68,6 +72,12 @@ Container element will be rendered like:
 
 Just run `npm install velement` or `yarn add velement`.
 
+## Source
+
+[src/index.ts](https://github.com/blue-hood/velement/blob/master/src/index.ts)
+
+The transpiled code for ES3 target ES2015 Modules is located at [dist/](https://github.com/blue-hood/velement/tree/master/dist).
+
 ## VirtualElement class
 
 VirtualElements are wrapper elements of HTML elements.
@@ -76,13 +86,14 @@ Typically, a minimum VirtualElement with HTMLDivElement is defined as:
 ```ts
 import VirtualElement from 'velement';
 
-class Div extends VirtualElement<HTMLDivElement> {
+class TSDiv extends VirtualElement<HTMLDivElement> {
   public constructor(element: HTMLDivElement | null) {
     super(element || 'div');
+    this.element.innerHTML = 'VirtualDivElement';
   }
 }
 
-new Div(null);
+new TSDiv(null);
 ```
 
 Then, the constructor can have properties.
@@ -91,19 +102,19 @@ The inner HTML element can be accessed through `this.element`.
 ```ts
 import VirtualElement from 'velement';
 
-interface DivProps {
+interface TextDivProps {
   text: string;
 }
 
-class Div extends VirtualElement<HTMLDivElement> {
-  public constructor(element: HTMLDivElement | null, props: DivProps) {
+class TextDiv extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null, props: TextDivProps) {
     super(element || 'div');
 
     this.element.innerHTML = props.text;
   }
 }
 
-new Div(null, {
+new TextDiv(null, {
   text: 'VirtualDivElement. '
 });
 ```
@@ -112,7 +123,7 @@ VirtualElement also can be rendered to existing element.
 
 ```ts
 const div = document.createElement('div');
-new Div(div, {
+new TextDiv(div, {
   text: 'VirtualDivElement. '
 });
 ```
@@ -164,20 +175,24 @@ ex. VirtualElement
 ```ts
 import VirtualElement, { createElement } from 'velement';
 
-interface DivProps {
+interface ColorDivProps {
   color: string;
 }
 
-class Div extends VirtualElement<HTMLDivElement> {
-  public constructor(element: HTMLDivElement | null, props: DivProps) {
+class ColorDiv extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null, props: ColorDivProps) {
     super(element || 'div');
 
     this.element.style.color = props.color;
   }
 }
 
-createElement<Div, DivProps>(
-  Div,
+declare module 'velement' {
+  function createElement(type: typeof ColorDiv, props: ColorDivProps, ...children: Child[]): ColorDiv;
+}
+
+createElement(
+  ColorDiv,
   {
     color: 'red'
   },
@@ -200,16 +215,21 @@ ex.
 ```ts
 import VirtualElement, { appendChildren, createElement } from 'velement';
 
-class Div extends VirtualElement<HTMLDivElement> {
+class TSDiv extends VirtualElement<HTMLDivElement> {
   public constructor(element: HTMLDivElement | null) {
     super(element || 'div');
+    this.element.innerHTML = 'VirtualDivElement';
   }
 }
 
+declare module 'velement' {
+  function createElement(type: typeof TSDiv, props: {}, ...children: Child[]): TSDiv;
+}
+
 const container = document.createElement('div');
-appendChildren(container, createElement<Div, {}>(Div, {}), createElement('div', null), 'TextNode. ');
+
+const htmlElement = createElement('div', null);
+htmlElement.innerHTML = `HTMLDivElement`;
+
+appendChildren(container, createElement(TSDiv, {}), htmlElement, 'TextNode. ');
 ```
-
-## 総括
-
-velement を使うと、React がいかに洗練されているかを体感することができるでしょう。

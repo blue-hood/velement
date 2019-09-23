@@ -1,97 +1,102 @@
 import '@testing-library/jest-dom/extend-expect';
 import VirtualElement, { appendChildren, createElement } from '..';
 
-interface DivProps {
+class JSDiv extends VirtualElement {
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+  constructor(element) {
+    super(element || 'div');
+    this.element.innerHTML = 'VirtualDivElement';
+  }
+}
+
+class TSDiv extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null) {
+    super(element || 'div');
+    this.element.innerHTML = 'VirtualDivElement';
+  }
+}
+
+declare module '..' {
+  function createElement(type: typeof TSDiv, props: {}, ...children: Child[]): TSDiv;
+}
+
+interface TextDivProps {
   text: string;
 }
 
-class PropsDiv extends VirtualElement<HTMLDivElement> {
-  public constructor(element: HTMLDivElement | null, props: DivProps) {
+class TextDiv extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null, props: TextDivProps) {
     super(element || 'div');
 
     this.element.innerHTML = props.text;
   }
 }
 
-test('Usage with JavaScript', async () => {
-  class Div extends VirtualElement {
-    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-    constructor(element) {
-      super(element || 'div');
-      this.element.innerHTML = 'VirtualDivElement';
-    }
-  }
+declare module '..' {
+  function createElement(type: typeof TextDiv, props: TextDivProps, ...children: Child[]): TextDiv;
+}
 
+interface ColorDivProps {
+  color: string;
+}
+
+class ColorDiv extends VirtualElement<HTMLDivElement> {
+  public constructor(element: HTMLDivElement | null, props: ColorDivProps) {
+    super(element || 'div');
+
+    this.element.style.color = props.color;
+  }
+}
+
+declare module '..' {
+  function createElement(type: typeof ColorDiv, props: ColorDivProps, ...children: Child[]): ColorDiv;
+}
+
+test('usage with JavaScript', async () => {
   const container = document.createElement('div');
 
   const htmlElement = createElement('div', null);
   htmlElement.innerHTML = `HTMLDivElement`;
-  const virtualElement = createElement(Div, {});
+  const virtualElement = createElement(JSDiv, {});
 
   appendChildren(container, 'TextNode', htmlElement, virtualElement);
   expect(container).toMatchSnapshot();
 });
 
-test('Usage with TypeScript', async () => {
-  class Div extends VirtualElement<HTMLDivElement> {
-    public constructor(element: HTMLDivElement | null) {
-      super(element || 'div');
-      this.element.innerHTML = 'VirtualDivElement';
-    }
-  }
-
+test('usage with TypeScript', async () => {
   const container = document.createElement('div');
 
   const htmlElement = createElement('div', null);
   htmlElement.innerHTML = `HTMLDivElement`;
-  const virtualElement = createElement<Div, {}>(Div, {});
+  const virtualElement = createElement(TSDiv, {});
 
   appendChildren(container, 'TextNode', htmlElement, virtualElement);
   expect(container).toMatchSnapshot();
 });
 
-test('Minimum VirtualElement', async () => {
-  class Div extends VirtualElement<HTMLDivElement> {
-    public constructor(element: HTMLDivElement | null) {
-      super(element || 'div');
-    }
-  }
-
-  expect(new Div(null)).toMatchSnapshot();
+test('minimum VirtualElement', async () => {
+  expect(new TSDiv(null)).toMatchSnapshot();
 });
 
 test('VirtualElement with properties', async () => {
   expect(
-    new PropsDiv(null, {
+    new TextDiv(null, {
       text: 'VirtualDivElement. '
     })
   ).toMatchSnapshot();
 });
 
-test('Render to existing element', async () => {
+test('render to existing element', async () => {
   const div = document.createElement('div');
 
   expect(
-    new PropsDiv(div, {
+    new TextDiv(div, {
       text: 'VirtualDivElement. '
     })
   ).toMatchSnapshot();
 });
 
-test('Example of appendChildren', async () => {
-  class Div extends VirtualElement<HTMLDivElement> {
-    public constructor(element: HTMLDivElement | null) {
-      super(element || 'div');
-    }
-  }
-
-  const container = document.createElement('div');
-  appendChildren(container, createElement<Div, {}>(Div, {}), createElement('div', null), 'TextNode. ');
-
-  expect(container).toMatchSnapshot();
-});
-
-test('Example of createElement of HTML element', async () => {
+test('example of createElement of HTML element', async () => {
   expect(
     createElement(
       'div',
@@ -105,26 +110,24 @@ test('Example of createElement of HTML element', async () => {
   ).toMatchSnapshot();
 });
 
-test('Example of createElement of VirtualElement', async () => {
-  interface DivProps {
-    color: string;
-  }
-
-  class Div extends VirtualElement<HTMLDivElement> {
-    public constructor(element: HTMLDivElement | null, props: DivProps) {
-      super(element || 'div');
-
-      this.element.style.color = props.color;
-    }
-  }
-
+test('example of createElement of VirtualElement', async () => {
   expect(
-    createElement<Div, DivProps>(
-      Div,
+    createElement(
+      ColorDiv,
       {
         color: 'red'
       },
       'VirtualDivElement. '
     )
   ).toMatchSnapshot();
+});
+
+test('example of appendChildren', async () => {
+  const container = document.createElement('div');
+
+  const htmlElement = createElement('div', null);
+  htmlElement.innerHTML = `HTMLDivElement`;
+
+  appendChildren(container, createElement(TSDiv, {}), htmlElement, 'TextNode. ');
+  expect(container).toMatchSnapshot();
 });

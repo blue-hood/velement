@@ -1,7 +1,8 @@
-type Child = HTMLElement | VirtualElement | string;
 interface Attributes {
   [name: string]: any;
 }
+
+export type Child = HTMLElement | VirtualElement | string;
 
 export function appendChildren(element: HTMLElement, ...children: Child[]): void {
   children.forEach(child => {

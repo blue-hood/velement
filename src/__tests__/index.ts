@@ -18,13 +18,17 @@ class Div extends VirtualElement<HTMLDivElement> {
   }
 }
 
+declare module '..' {
+  function createElement(type: typeof Div, props: DivProps, ...children: Child[]): Div;
+}
+
 test('should append children', async () => {
   const div = document.createElement('div');
 
   const htmlElement = createElement('div', null);
   htmlElement.innerHTML = `HTMLDivElement`;
 
-  const virtualElement = createElement<Div, DivProps>(Div, {});
+  const virtualElement = createElement(Div, {});
 
   appendChildren(div, 'TextNode', htmlElement, virtualElement);
 
@@ -41,7 +45,7 @@ test('should create HTMLElement', async () => {
 });
 
 test('should create VirtualElement', async () => {
-  const div = createElement<Div, DivProps>(Div, {
+  const div = createElement(Div, {
     style: 'font-weight: bold;'
   });
 

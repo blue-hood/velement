@@ -10,8 +10,8 @@ A minimal DOM renderer for legacy browsers.
 
 With JavaScript:
 
-```JavaScript
-import VirtualElement, {appendChildren, createElement} from 'velement';
+```js
+import VirtualElement, { appendChildren, createElement } from 'velement';
 
 class Div extends VirtualElement {
   constructor(element) {
@@ -31,8 +31,8 @@ appendChildren(container, 'TextNode', htmlElement, virtualElement);
 
 Then with TypeScript:
 
-```TypeScript
-import VirtualElement, {appendChildren, createElement} from 'velement';
+```ts
+import VirtualElement, { appendChildren, createElement } from 'velement';
 
 class Div extends VirtualElement<HTMLDivElement> {
   public constructor(element: HTMLDivElement | null) {
@@ -73,7 +73,7 @@ Just run `npm install velement` or `yarn add velement`.
 VirtualElements are wrapper elements of HTML elements.
 Typically, a minimum VirtualElement with HTMLDivElement is defined as:
 
-```TypeScript
+```ts
 import VirtualElement from 'velement';
 
 class Div extends VirtualElement<HTMLDivElement> {
@@ -88,7 +88,7 @@ new Div(null);
 Then, the constructor can have properties.
 The inner HTML element can be accessed through `this.element`.
 
-```TypeScript
+```ts
 import VirtualElement from 'velement';
 
 interface DivProps {
@@ -110,10 +110,10 @@ new Div(null, {
 
 VirtualElement also can be rendered to existing element.
 
-```TypeScript
+```ts
 const div = document.createElement('div');
 new Div(div, {
-    text: 'VirtualDivElement. '
+  text: 'VirtualDivElement. '
 });
 ```
 
@@ -121,17 +121,23 @@ new Div(div, {
 
 ### createElement
 
-```TypeScript
+```ts
 interface Attributes {
   [name: string]: any;
 }
 type Child = HTMLElement | VirtualElement | string;
 
-export function createElement<HElement extends HTMLElement>
-  (type: keyof HTMLElementTagNameMap, props: Attributes | null, ...children: Child[]): HElement;
+export function createElement<HElement extends HTMLElement>(
+  type: keyof HTMLElementTagNameMap,
+  props: Attributes | null,
+  ...children: Child[]
+): HElement;
 
-export function createElement<VElement extends VirtualElement, Props>
-  (type: { new (element: null, props: Props): VElement }, props: Props, ...children: Child[]): VElement;
+export function createElement<VElement extends VirtualElement, Props>(
+  type: { new (element: null, props: Props): VElement },
+  props: Props,
+  ...children: Child[]
+): VElement;
 ```
 
 Create HTML element or VirtualElement with properties.
@@ -139,23 +145,27 @@ And render children to the inner element, this is equal to `appendChildren` func
 
 ex. HTMLDivElement
 
-```TypeScript
-import {createElement} from 'velement';
+```ts
+import { createElement } from 'velement';
 
-createElement<HTMLDivElement>('div', {
-  style: `
+createElement<HTMLDivElement>(
+  'div',
+  {
+    style: `
     color: red;
   `
-}, 'HTMLDivElement. ');
+  },
+  'HTMLDivElement. '
+);
 ```
 
 ex. VirtualElement
 
-```TypeScript
-import VirtualElement, {createElement} from 'velement';
+```ts
+import VirtualElement, { createElement } from 'velement';
 
 interface DivProps {
-  color: string
+  color: string;
 }
 
 class Div extends VirtualElement<HTMLDivElement> {
@@ -166,14 +176,18 @@ class Div extends VirtualElement<HTMLDivElement> {
   }
 }
 
-createElement<Div, DivProps>(Div, {
-  color: 'red'
-}, 'VirtualDivElement. ');
+createElement<Div, DivProps>(
+  Div,
+  {
+    color: 'red'
+  },
+  'VirtualDivElement. '
+);
 ```
 
 ### appendChildren
 
-```TypeScript
+```ts
 type Child = HTMLElement | VirtualElement | string;
 
 function appendChildren(element: HTMLElement, ...children: Child[]): void;
@@ -183,8 +197,8 @@ Append children - HTML element, VirtualElement, text - to HTML element.
 
 ex.
 
-```TypeScript
-import VirtualElement, {appendChildren, createElement} from 'velement';
+```ts
+import VirtualElement, { appendChildren, createElement } from 'velement';
 
 class Div extends VirtualElement<HTMLDivElement> {
   public constructor(element: HTMLDivElement | null) {

@@ -70,7 +70,7 @@ Container element will be rendered like:
 
 ## Install
 
-Just run `npm install velement` or `yarn add velement`.
+Just run `npm install @blue-hood/velement` or `yarn add @blue-hood/velement`.
 
 ## Source
 
